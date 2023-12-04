@@ -1,3 +1,6 @@
+/* eslint-disable import/first */
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import homeRouters from './src/routers/homeRouters';
 
