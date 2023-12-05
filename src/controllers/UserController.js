@@ -4,7 +4,8 @@ class UserController {
   async store(req, res) {
     try {
       const novoUser = await User.create(req.body);
-      return res.json(novoUser);
+      const { id, email } = novoUser;
+      return res.json({ id, email });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
@@ -14,7 +15,7 @@ class UserController {
 
   async index(req, res) {
     try {
-      const users = await User.findAll();
+      const users = await User.findAll({ attributes: ['id', 'nome', 'email'] });
       return res.status(200).json(users);
     } catch (e) {
       return res.status(500).json(null);
@@ -25,7 +26,8 @@ class UserController {
     try {
       const { id } = req.params;
       const user = await User.findByPk(id);
-      return res.status(200).json(user);
+      const { nome, email } = user;
+      return res.status(200).json({ id, nome, email });
     } catch (e) {
       return res.status(500).json(null);
     }
@@ -33,7 +35,7 @@ class UserController {
 
   async update(req, res) {
     try {
-      const { id } = req.params;
+      const id = req.userId;
       const user = await User.findByPk(id);
 
       if (!id) {
@@ -43,7 +45,8 @@ class UserController {
         return res.status(404).json({ errors: ['usuário não foi encontrado'] });
       }
       const newuser = await user.update(req.body);
-      return res.status(200).json(newuser);
+      const { email } = newuser;
+      return res.status(201).json({ id, email });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
@@ -53,7 +56,7 @@ class UserController {
 
   async delete(req, res) {
     try {
-      const { id } = req.params;
+      const id = req.userId;
       if (!id) {
         return res.status(400).json({ errors: ['ID não foi informado'] });
       }
@@ -62,7 +65,7 @@ class UserController {
         return res.status(404).json({ errors: ['usuário não foi encontrado'] });
       }
       await user.destroy();
-      return res.status(204).json(user);
+      return res.status(204).json();
     } catch (e) {
       return res.status(500).json(null);
     }
