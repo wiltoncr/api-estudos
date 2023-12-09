@@ -12,13 +12,21 @@ class FotoController {
         return res.status(400).json({ errors: [err.code] });
       }
 
-      const { originalname, filename } = req.file;
-      // eslint-disable-next-line camelcase
-      const { aluno_id } = req.body;
+      try {
+        const { originalname, filename } = req.file;
+        // eslint-disable-next-line camelcase
+        const { aluno_id } = req.body;
 
-      // eslint-disable-next-line camelcase
-      const foto = await Foto.create({ originalname, filename, aluno_id });
-      return res.json(foto);
+        // eslint-disable-next-line camelcase
+        const foto = await Foto.create({ originalname, filename, aluno_id });
+        return res.status(201).json(foto);
+      } catch (erro) {
+        return res.status(500).json({
+          errors: [
+            'erro verifique o aluno informado',
+          ],
+        });
+      }
     });
   }
 }
