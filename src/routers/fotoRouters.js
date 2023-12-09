@@ -1,9 +1,10 @@
 import { Router } from 'express';
 
 import FotoController from '../controllers/FotoController';
+import loginRequired from '../middlewares/loginRequired';
 
 const foto = new Router();
 
-foto.post('/', FotoController.store);
+foto.post('/', loginRequired, FotoController.store);
 
 export default foto;
