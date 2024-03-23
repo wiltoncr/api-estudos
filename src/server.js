@@ -1,6 +1,6 @@
-import app from './app';
+import app from "./app";
 
 const port = 3001;
 app.app.listen(port, () => {
-  console.log('Servidor iniciado');
+  console.log(`Servidor iniciado ${port}`);
 });
