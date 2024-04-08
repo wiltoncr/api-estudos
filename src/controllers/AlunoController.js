@@ -74,6 +74,7 @@ class AlunoController {
           'id',
           'nome',
           'sobrenome',
+          'email',
           'idade',
           'peso',
           'altura',

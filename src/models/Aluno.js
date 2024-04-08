@@ -48,7 +48,7 @@ export default class Aluno extends Model {
           defaultValue: '',
           validate: {
             isFloat: {
-              msg: 'idade precisa ser um numero inteiro ou com decimais',
+              msg: 'peso precisa ser um numero inteiro ou com decimais',
             },
           },
         },
